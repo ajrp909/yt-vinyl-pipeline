@@ -1,0 +1,10 @@
+[project]
+name = "yt-vinyl-pipeline"
+version = "0.1.0"
+description = "CLI vinyl pipeline idea"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = []
