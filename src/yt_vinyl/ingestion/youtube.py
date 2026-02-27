@@ -3,6 +3,8 @@ from googleapiclient.discovery import Resource, build
 
 # youtube_api_key = get_api_key("YOUTUBE_API_KEY")
 
+# target_playlist = "PLgvmTcL7vvrzcjbTi0u61k_WotX36JQur"
+
 
 def youtube_client_object(api_key: str):
     return build("youtube", "v3", developerKey=api_key)
