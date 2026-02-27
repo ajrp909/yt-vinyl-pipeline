@@ -6,7 +6,7 @@ from googleapiclient.discovery import Resource, build
 # target_playlist = "PLgvmTcL7vvrzcjbTi0u61k_WotX36JQur"
 
 
-def youtube_client_object(api_key: str):
+def youtube_client_object(api_key: str) -> Resource:
     return build("youtube", "v3", developerKey=api_key)
 
 
