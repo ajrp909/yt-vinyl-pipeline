@@ -17,9 +17,8 @@ def get_video_ids(playlist_id: str, youtube_object: Resource) -> list:
 
 
 def get_video_descriptions(video_id: str, youtube_object: Resource) -> dict:
-
-    video_object = (
-        youtube_object.videos().list(part="localizations", id=video_id).execute()
-    )
-
-    return video_object["items"][0]["localizations"]["en"]
+    video_object = youtube_object.videos().list(part="snippet", id=video_id).execute()
+    snippet = video_object["items"][0]["snippet"]
+    title = snippet["title"]
+    description = snippet["description"]
+    return {"title": title, "description": description}

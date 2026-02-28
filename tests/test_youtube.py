@@ -26,13 +26,7 @@ def test_get_video_ids(mocker):
 def test_get_video_description(mocker):
     mock_youtube = mocker.Mock()
     mock_youtube.videos().list().execute.return_value = {
-        "items": [
-            {
-                "localizations": {
-                    "en": {"title": "A title", "Description": "A Description"}
-                }
-            }
-        ]
+        "items": [{"snippet": {"title": "A title", "description": "A Description"}}]
     }
     result = get_video_descriptions("fake_video_id", mock_youtube)
-    assert result == {"title": "A title", "Description": "A Description"}
+    assert result == {"title": "A title", "description": "A Description"}
