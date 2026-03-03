@@ -26,3 +26,4 @@ def test_get_root():
 
     assert get_root().is_absolute()
     assert get_root().is_dir()
+    assert get_root("tests", "test_utils.py").is_relative_to(get_root("tests"))
