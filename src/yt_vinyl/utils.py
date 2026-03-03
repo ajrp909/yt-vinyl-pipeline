@@ -2,6 +2,8 @@ import os
 
 from dotenv import load_dotenv
 
+from pathlib import Path
+
 
 def get_api_key(key_string: str) -> str:
 
@@ -10,3 +12,8 @@ def get_api_key(key_string: str) -> str:
     if not api_key:
         raise ValueError("API key field cannot be None")
     return api_key
+
+
+def get_root():
+
+    return Path(__file__).resolve().parents[2]

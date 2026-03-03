@@ -1,6 +1,6 @@
 import pytest
 
-from yt_vinyl.utils import get_api_key
+from yt_vinyl.utils import get_api_key, get_root
 
 
 def test_get_api_key_successful(mocker):
@@ -20,3 +20,9 @@ def test_get_api_key_failed(mocker):
 
     assert exec_info.type is ValueError
     assert exec_info.value.args[0] == "API key field cannot be None"
+
+
+def test_get_root():
+
+    assert get_root().is_absolute()
+    assert get_root().is_dir()
