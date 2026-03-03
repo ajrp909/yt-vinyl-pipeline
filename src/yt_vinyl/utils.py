@@ -17,6 +17,3 @@ def get_api_key(key_string: str) -> str:
 def get_root(*pth: str) -> Path:
 
     return Path(__file__).resolve().parents[2].joinpath(*pth)
-
-
-print(get_root("tests", "test_utils.py"))
