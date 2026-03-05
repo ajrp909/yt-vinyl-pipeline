@@ -22,3 +22,9 @@ def get_video_descriptions(video_id: str, youtube_object: Resource) -> dict:
     title = snippet["title"]
     description = snippet["description"]
     return {"title": title, "description": description}
+
+
+def get_raw_video(video_id: str, youtube_object: Resource) -> dict:
+    video_object = youtube_object.videos().list(part="snippet", id=video_id).execute()
+    item = video_object["items"][0]
+    return {"id": item["id"], "snippet": item["snippet"]}
