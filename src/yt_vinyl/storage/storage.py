@@ -31,3 +31,7 @@ def insert_raw_video(conn, video_id, snippet):
         "insert into raw_videos values (:video_id, :snippet, date('now'))",
         {"video_id": video_id, "snippet": snippet},
     )
+
+
+def get_raw_video(conn):
+    return conn.execute("select * from raw_videos").fetchall()

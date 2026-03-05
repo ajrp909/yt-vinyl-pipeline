@@ -6,6 +6,7 @@ from yt_vinyl.storage.storage import (
     establish_connection,
     create_bronze_table,
     insert_raw_video,
+    get_raw_video,
 )
 
 
@@ -34,3 +35,19 @@ def test_insert_raw_video():
         result = conn.execute("select * from raw_videos").fetchone()
         assert result[0] == 1
         assert result[1] == "snippet"
+
+
+def test_get_raw_video():
+
+    with establish_connection(":memory:") as conn:
+        create_bronze_table(conn)
+        insert_raw_video(conn, 1, "snippet")
+        result = get_raw_video(conn)
+        assert result[0][0] == 1
+        assert result[0][1] == "snippet"
+        insert_raw_video(conn, 2, "dos-snippet")
+        result = get_raw_video(conn)
+        assert result[0][0] == 1
+        assert result[0][1] == "snippet"
+        assert result[1][0] == 2
+        assert result[1][1] == "dos-snippet"
