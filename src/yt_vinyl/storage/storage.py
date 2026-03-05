@@ -22,16 +22,24 @@ def establish_connection(db_path):
 
 def create_bronze_table(conn):
     conn.execute(
-        "create table if not exists raw_videos (video_id, snippet, ingestion_date)"
+        """create table if not exists raw_videos (
+            video_id text primary key, 
+            snippet text, 
+            ingestion_date text, 
+            processed integer default 0,
+            processed_date default null)"""
     )
+    conn.commit()
 
 
 def insert_raw_video(conn, video_id, snippet):
     conn.execute(
-        "insert into raw_videos values (:video_id, :snippet, date('now'))",
+        """insert into raw_videos (video_id, snippet, ingestion_date) 
+            values (:video_id, :snippet, date('now'))""",
         {"video_id": video_id, "snippet": snippet},
     )
+    conn.commit()
 
 
 def get_raw_video(conn):
-    return conn.execute("select * from raw_videos").fetchall()
+    return conn.execute("select * from raw_videos where processed = 0").fetchall()

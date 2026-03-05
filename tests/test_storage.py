@@ -33,7 +33,7 @@ def test_insert_raw_video():
         assert not conn.execute("select * from raw_videos").fetchone()
         insert_raw_video(conn, 1, "snippet")
         result = conn.execute("select * from raw_videos").fetchone()
-        assert result[0] == 1
+        assert result[0] == "1"
         assert result[1] == "snippet"
 
 
@@ -43,11 +43,11 @@ def test_get_raw_video():
         create_bronze_table(conn)
         insert_raw_video(conn, 1, "snippet")
         result = get_raw_video(conn)
-        assert result[0][0] == 1
+        assert result[0][0] == "1"
         assert result[0][1] == "snippet"
         insert_raw_video(conn, 2, "dos-snippet")
         result = get_raw_video(conn)
-        assert result[0][0] == 1
+        assert result[0][0] == "1"
         assert result[0][1] == "snippet"
-        assert result[1][0] == 2
+        assert result[1][0] == "2"
         assert result[1][1] == "dos-snippet"
