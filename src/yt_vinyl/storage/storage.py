@@ -20,6 +20,7 @@ def establish_connection(db_path):
     conn.close()
 
 
-if __name__ == "__main__":
-    with establish_connection(":memory:") as con:
-        pass
+def create_bronze_table(conn):
+    conn.execute(
+        "create table if not exists raw_videos (video_id, snippet, ingestion_date)"
+    )
