@@ -18,6 +18,7 @@ jobs:
     - name: Install dependencies
       run: |
         uv sync 
+        iv pip install -e .
     
     - name: run checks
       run: |
