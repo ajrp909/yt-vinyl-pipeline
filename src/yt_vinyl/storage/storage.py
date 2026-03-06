@@ -4,10 +4,6 @@ from loguru import logger
 
 from contextlib import contextmanager
 
-from yt_vinyl.utils import get_root
-
-BRONZE_PATH = get_root("data", "test.db")
-
 
 @contextmanager
 def establish_connection(db_path):
@@ -41,5 +37,5 @@ def insert_raw_video(conn, video_id, snippet):
     conn.commit()
 
 
-def get_raw_video(conn):
+def get_raw_video_db(conn):
     return conn.execute("select * from raw_videos where processed = 0").fetchall()
