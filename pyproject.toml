@@ -4,7 +4,12 @@ version = "0.1.0"
 description = "CLI vinyl pipeline idea"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "google-api-python-client>=2.190.0",
+    "loguru>=0.7.3",
+    "pytest-mock>=3.15.1",
+    "python-dotenv>=1.2.1",
+]
 
 [dependency-groups]
 dev = [
