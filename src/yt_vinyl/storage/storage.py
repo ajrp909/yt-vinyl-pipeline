@@ -4,6 +4,8 @@ from loguru import logger
 
 from contextlib import contextmanager
 
+import json
+
 
 @contextmanager
 def establish_connection(db_path):
@@ -32,7 +34,7 @@ def insert_raw_video(conn, video_id, snippet):
     conn.execute(
         """insert into raw_videos (video_id, snippet, ingestion_date) 
             values (:video_id, :snippet, date('now'))""",
-        {"video_id": video_id, "snippet": snippet},
+        {"video_id": video_id, "snippet": json.dumps(snippet)},
     )
     conn.commit()
 

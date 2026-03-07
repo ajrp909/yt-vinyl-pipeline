@@ -15,8 +15,6 @@ from yt_vinyl.storage.storage import (
 
 from yt_vinyl.config import BRONZE_PATH, PLAYLIST_ID
 
-import json
-
 
 def main():
 
@@ -31,7 +29,7 @@ def main():
     with establish_connection(BRONZE_PATH) as bronze_conn:
         create_bronze_table(bronze_conn)
         for entry in raw_video_data:
-            insert_raw_video(bronze_conn, entry["id"], json.dumps(entry["snippet"]))
+            insert_raw_video(bronze_conn, entry["id"], entry["snippet"])
         print(get_raw_video_db(bronze_conn))
 
 
