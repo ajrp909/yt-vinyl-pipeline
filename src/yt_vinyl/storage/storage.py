@@ -40,4 +40,7 @@ def insert_raw_video(conn, video_id, snippet):
 
 
 def get_raw_video_db(conn):
-    return conn.execute("select * from raw_videos where processed = 0").fetchall()
+    list_of_tups = conn.execute(
+        "select * from raw_videos where processed = 0"
+    ).fetchall()
+    return [{"video_id": tup[0], "snippet": json.loads(tup[1])} for tup in list_of_tups]
