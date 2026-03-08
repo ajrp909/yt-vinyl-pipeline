@@ -25,6 +25,7 @@ def test_create_bronze_table():
     with establish_connection(":memory:") as conn:
         assert not conn.execute("select * from sqlite_master").fetchone()
         create_bronze_table(conn)
+        conn.commit()
         assert conn.execute("select * from sqlite_master").fetchone()
 
 
@@ -34,10 +35,12 @@ def test_insert_raw_video():
         create_bronze_table(conn)
         assert not conn.execute("select * from raw_videos").fetchone()
         insert_raw_video(conn, 1, "snippet")
+        conn.commit()
         result = conn.execute("select * from raw_videos").fetchone()
         assert result[0] == "1"
         assert result[1] == '"snippet"'
         insert_raw_video(conn, 1, "snippet")
+        conn.commit()
         assert result[0] == "1"
         assert result[1] == '"snippet"'
 
@@ -47,11 +50,13 @@ def test_get_raw_video_db():
     with establish_connection(":memory:") as conn:
         create_bronze_table(conn)
         insert_raw_video(conn, 1, "snippet")
+        conn.commit()
         result = get_raw_video_db(conn)
         assert result[0]["video_id"] == "1"
         assert result[0]["snippet"] == "snippet"
         insert_raw_video(conn, 2, "dos-snippet")
         result = get_raw_video_db(conn)
+        conn.commit()
         assert result[0]["video_id"] == "1"
         assert result[0]["snippet"] == "snippet"
         assert result[1]["video_id"] == "2"
@@ -62,6 +67,7 @@ def test_create_silver_table():
     with establish_connection(":memory:") as conn:
         assert not conn.execute("select * from sqlite_master").fetchone()
         create_silver_table(conn)
+        conn.commit()
         assert conn.execute("select * from sqlite_master").fetchone()
 
 
@@ -95,7 +101,6 @@ def test_insert_silver_track():
         insert_silver_track(conn, data_2)
         conn.commit()
         result = conn.execute("select * from silver_videos").fetchall()
-        print(result)
         assert result[0][:5] == (
             1,
             "fake_video_id",

@@ -27,7 +27,6 @@ def create_bronze_table(conn):
             processed_date default null
             )"""
     )
-    conn.commit()
 
 
 def insert_raw_video(conn, video_id, snippet):
@@ -36,7 +35,6 @@ def insert_raw_video(conn, video_id, snippet):
             values (:video_id, :snippet, date('now'))""",
         {"video_id": video_id, "snippet": json.dumps(snippet)},
     )
-    conn.commit()
 
 
 def get_raw_video_db(conn):
@@ -57,7 +55,6 @@ def create_silver_table(conn):
             created_at text
             )"""
     )
-    conn.commit()
 
 
 def insert_silver_track(conn, transformed_dct: dict):
