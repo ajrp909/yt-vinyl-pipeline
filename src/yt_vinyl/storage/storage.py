@@ -32,7 +32,7 @@ def create_bronze_table(conn):
 
 def insert_raw_video(conn, video_id, snippet):
     conn.execute(
-        """insert into raw_videos (video_id, snippet, ingestion_date) 
+        """insert or ignore into raw_videos (video_id, snippet, ingestion_date) 
             values (:video_id, :snippet, date('now'))""",
         {"video_id": video_id, "snippet": json.dumps(snippet)},
     )

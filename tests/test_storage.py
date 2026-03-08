@@ -36,6 +36,9 @@ def test_insert_raw_video():
         result = conn.execute("select * from raw_videos").fetchone()
         assert result[0] == "1"
         assert result[1] == '"snippet"'
+        insert_raw_video(conn, 1, "snippet")
+        assert result[0] == "1"
+        assert result[1] == '"snippet"'
 
 
 def test_get_raw_video_db():
