@@ -8,6 +8,7 @@ from yt_vinyl.storage.storage import (
     insert_raw_video,
     get_raw_video_db,
     create_silver_table,
+    insert_silver_track,
 )
 
 
@@ -62,3 +63,50 @@ def test_create_silver_table():
         assert not conn.execute("select * from sqlite_master").fetchone()
         create_silver_table(conn)
         assert conn.execute("select * from sqlite_master").fetchone()
+
+
+def test_insert_silver_track():
+
+    data_1 = {
+        "video_id": "fake_video_id",
+        "artist": "fake_artist",
+        "track": "fake_track_title",
+    }
+
+    data_2 = {
+        "video_id": "fake_video_id",
+        "artist": "fake_artist_2",
+        "track": "fake_track_title_2",
+    }
+
+    with establish_connection(":memory:") as conn:
+        create_silver_table(conn)
+        assert not conn.execute("select * from silver_videos").fetchone()
+        insert_silver_track(conn, data_1)
+        conn.commit()
+        result = conn.execute("select * from silver_videos").fetchone()
+        assert result[:5] == (
+            1,
+            "fake_video_id",
+            "fake_artist",
+            "fake_track_title",
+            "pending",
+        )
+        insert_silver_track(conn, data_2)
+        conn.commit()
+        result = conn.execute("select * from silver_videos").fetchall()
+        print(result)
+        assert result[0][:5] == (
+            1,
+            "fake_video_id",
+            "fake_artist",
+            "fake_track_title",
+            "pending",
+        )
+        assert result[1][:5] == (
+            2,
+            "fake_video_id",
+            "fake_artist_2",
+            "fake_track_title_2",
+            "pending",
+        )

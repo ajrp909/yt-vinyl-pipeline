@@ -19,18 +19,18 @@ def test_silver_transform():
 
     data_3 = [data_1, data_2]
     assert silver_transform([data_1]) == [
-        {"Artist": "Artist 1", "Title": "Track 1"},
-        {"Artist": "Artist 2", "Title": "Track 2"},
-        {"Artist": "Artist 3", "Title": "Track 3"},
+        {"artist": "Artist 1", "track": "Track 1", "video_id": "fake_video_id_1"},
+        {"artist": "Artist 2", "track": "Track 2", "video_id": "fake_video_id_1"},
+        {"artist": "Artist 3", "track": "Track 3", "video_id": "fake_video_id_1"},
     ]
     assert silver_transform([data_2]) == [
-        {"Artist": "Artist 5", "Title": "Track 5"},
-        {"Artist": "Artist 6", "Title": "Track 6"},
+        {"artist": "Artist 5", "track": "Track 5", "video_id": "fake_video_id_2"},
+        {"artist": "Artist 6", "track": "Track 6", "video_id": "fake_video_id_2"},
     ]
     assert silver_transform(data_3) == [
-        {"Artist": "Artist 1", "Title": "Track 1"},
-        {"Artist": "Artist 2", "Title": "Track 2"},
-        {"Artist": "Artist 3", "Title": "Track 3"},
-        {"Artist": "Artist 5", "Title": "Track 5"},
-        {"Artist": "Artist 6", "Title": "Track 6"},
+        {"artist": "Artist 1", "track": "Track 1", "video_id": "fake_video_id_1"},
+        {"artist": "Artist 2", "track": "Track 2", "video_id": "fake_video_id_1"},
+        {"artist": "Artist 3", "track": "Track 3", "video_id": "fake_video_id_1"},
+        {"artist": "Artist 5", "track": "Track 5", "video_id": "fake_video_id_2"},
+        {"artist": "Artist 6", "track": "Track 6", "video_id": "fake_video_id_2"},
     ]

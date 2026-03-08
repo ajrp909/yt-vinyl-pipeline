@@ -52,9 +52,21 @@ def create_silver_table(conn):
             track_id integer primary key,
             video_id text, 
             artist text,
-            title text,
+            track text,
             status text default 'pending',
             created_at text
             )"""
     )
     conn.commit()
+
+
+def insert_silver_track(conn, transformed_dct: dict):
+    conn.execute(
+        """insert into silver_videos (video_id, artist, track, created_at) 
+            values (:video_id, :artist, :track, date('now'))""",
+        {
+            "video_id": transformed_dct["video_id"],
+            "artist": transformed_dct["artist"],
+            "track": transformed_dct["track"],
+        },
+    )
