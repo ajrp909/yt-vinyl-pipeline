@@ -1,5 +1,5 @@
-from yt_vinyl.utils import get_root
+from yt_vinyl.utils import get_root, get_api_key
 
 BRONZE_PATH = get_root("data", "bronze.db")
 
-PLAYLIST_ID = "PL4krjmv5aN3qfI8pxdafgfuLXZgY18fev"
+PLAYLIST_ID = get_api_key("PLAYLIST_ID")

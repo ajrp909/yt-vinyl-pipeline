@@ -5,8 +5,6 @@ from yt_vinyl.ingestion.youtube import (
     get_raw_video,
 )
 
-import json
-
 
 def test_youtube_client_object(mocker):
     mock_build = mocker.patch("yt_vinyl.ingestion.youtube.build")
@@ -59,13 +57,11 @@ def test_get_raw_video(mocker):
     result = get_raw_video("fake_video_id", mock_youtube)
     assert result == {
         "id": "fake_video_id",
-        "snippet": json.dumps(
-            {
-                "title": "A fake title",
-                "description": "A fake description",
-                "publishedAt": "2024-01-01T00:00:00Z",
-                "channelId": "fake_channel_id",
-                "channelTitle": "Fake Channel",
-            }
-        ),
+        "snippet": {
+            "title": "A fake title",
+            "description": "A fake description",
+            "publishedAt": "2024-01-01T00:00:00Z",
+            "channelId": "fake_channel_id",
+            "channelTitle": "Fake Channel",
+        },
     }
