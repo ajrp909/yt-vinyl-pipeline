@@ -9,6 +9,7 @@ from yt_vinyl.storage.storage import (
     get_raw_video_db,
     create_silver_table,
     insert_silver_track,
+    update_bronze_when_processed,
 )
 
 
@@ -115,3 +116,20 @@ def test_insert_silver_track():
             "fake_track_title_2",
             "pending",
         )
+
+
+def test_update_bronze_when_processed():
+
+    with establish_connection(":memory:") as conn:
+        create_bronze_table(conn)
+        conn.commit()
+        insert_raw_video(conn, 1, "snippet")
+        conn.commit()
+        result = conn.execute("select * from raw_videos").fetchone()
+        assert result[0] == "1"
+        assert result[3] is None
+        update_bronze_when_processed(conn, "1")
+        conn.commit()
+        result = conn.execute("select * from raw_videos").fetchone()
+        assert result[0] == "1"
+        assert result[3] is not None

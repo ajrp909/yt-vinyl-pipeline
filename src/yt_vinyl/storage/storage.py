@@ -67,3 +67,10 @@ def insert_silver_track(conn, transformed_dct: dict):
             "track": transformed_dct["track"],
         },
     )
+
+
+def update_bronze_when_processed(conn, video_id):
+    conn.execute(
+        """update raw_videos set processed_date = date('now') where video_id = :video_id""",
+        {"video_id": video_id},
+    )
