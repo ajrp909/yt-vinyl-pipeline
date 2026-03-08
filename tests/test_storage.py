@@ -7,6 +7,7 @@ from yt_vinyl.storage.storage import (
     create_bronze_table,
     insert_raw_video,
     get_raw_video_db,
+    create_silver_table,
 )
 
 
@@ -51,3 +52,10 @@ def test_get_raw_video_db():
         assert result[0]["snippet"] == "snippet"
         assert result[1]["video_id"] == "2"
         assert result[1]["snippet"] == "dos-snippet"
+
+
+def test_create_silver_table():
+    with establish_connection(":memory:") as conn:
+        assert not conn.execute("select * from sqlite_master").fetchone()
+        create_silver_table(conn)
+        assert conn.execute("select * from sqlite_master").fetchone()

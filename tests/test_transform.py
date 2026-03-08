@@ -19,18 +19,18 @@ def test_silver_transform():
 
     data_3 = [data_1, data_2]
     assert silver_transform([data_1]) == [
-        {"Artist": "Artist 1", "Track": "Track 1"},
-        {"Artist": "Artist 2", "Track": "Track 2"},
-        {"Artist": "Artist 3", "Track": "Track 3"},
+        {"Artist": "Artist 1", "Title": "Track 1"},
+        {"Artist": "Artist 2", "Title": "Track 2"},
+        {"Artist": "Artist 3", "Title": "Track 3"},
     ]
     assert silver_transform([data_2]) == [
-        {"Artist": "Artist 5", "Track": "Track 5"},
-        {"Artist": "Artist 6", "Track": "Track 6"},
+        {"Artist": "Artist 5", "Title": "Track 5"},
+        {"Artist": "Artist 6", "Title": "Track 6"},
     ]
     assert silver_transform(data_3) == [
-        {"Artist": "Artist 1", "Track": "Track 1"},
-        {"Artist": "Artist 2", "Track": "Track 2"},
-        {"Artist": "Artist 3", "Track": "Track 3"},
-        {"Artist": "Artist 5", "Track": "Track 5"},
-        {"Artist": "Artist 6", "Track": "Track 6"},
+        {"Artist": "Artist 1", "Title": "Track 1"},
+        {"Artist": "Artist 2", "Title": "Track 2"},
+        {"Artist": "Artist 3", "Title": "Track 3"},
+        {"Artist": "Artist 5", "Title": "Track 5"},
+        {"Artist": "Artist 6", "Title": "Track 6"},
     ]

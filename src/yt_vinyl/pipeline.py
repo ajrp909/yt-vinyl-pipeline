@@ -13,7 +13,7 @@ from yt_vinyl.storage.storage import (
     get_raw_video_db,
 )
 
-from yt_vinyl.config import BRONZE_PATH, PLAYLIST_ID
+from yt_vinyl.config import DATABASE_PATH, PLAYLIST_ID
 
 
 def main():
@@ -26,11 +26,11 @@ def main():
     for video_id in video_ids:
         raw_video_data.append(get_raw_video(video_id, video_object))
 
-    with establish_connection(BRONZE_PATH) as bronze_conn:
-        create_bronze_table(bronze_conn)
+    with establish_connection(DATABASE_PATH) as conn:
+        create_bronze_table(conn)
         for entry in raw_video_data:
-            insert_raw_video(bronze_conn, entry["id"], entry["snippet"])
-        print(get_raw_video_db(bronze_conn))
+            insert_raw_video(conn, entry["id"], entry["snippet"])
+        print(get_raw_video_db(conn))
 
 
 if __name__ == "__main__":

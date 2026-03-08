@@ -27,7 +27,7 @@ def silver_transform(bronze_data: list[dict]) -> list[dict]:
             elements = track.split(" - ")
             if elements[0].isnumeric():
                 lst_of_dcts.append(
-                    {"Artist": elements[1].strip(), "Track": elements[2].strip()}
+                    {"Artist": elements[1].strip(), "Title": elements[2].strip()}
                 )
 
     return lst_of_dcts

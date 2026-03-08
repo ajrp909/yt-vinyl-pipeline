@@ -23,9 +23,9 @@ def create_bronze_table(conn):
         """create table if not exists raw_videos (
             video_id text primary key, 
             snippet text, 
-            ingestion_date text, 
-            processed integer default 0,
-            processed_date default null)"""
+            ingestion_date text,
+            processed_date default null
+            )"""
     )
     conn.commit()
 
@@ -41,6 +41,20 @@ def insert_raw_video(conn, video_id, snippet):
 
 def get_raw_video_db(conn):
     list_of_tups = conn.execute(
-        "select * from raw_videos where processed = 0"
+        "select * from raw_videos where processed_date is null"
     ).fetchall()
     return [{"video_id": tup[0], "snippet": json.loads(tup[1])} for tup in list_of_tups]
+
+
+def create_silver_table(conn):
+    conn.execute(
+        """create table if not exists silver_videos (
+            track_id integer primary key,
+            video_id text, 
+            artist text,
+            title text,
+            status text default 'pending',
+            created_at text
+            )"""
+    )
+    conn.commit()
