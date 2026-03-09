@@ -17,6 +17,7 @@ def silver_transform(bronze_data: list[dict]) -> list[dict]:
     lst_of_dcts = []
 
     for dct in bronze_data:
+        video_id = dct["video_id"]
         desc = dct["snippet"]["description"]
 
         tracklist_string = re.compile(r"\n\n(.*)", re.DOTALL).findall(desc)[0]
@@ -27,7 +28,11 @@ def silver_transform(bronze_data: list[dict]) -> list[dict]:
             elements = track.split(" - ")
             if elements[0].isnumeric():
                 lst_of_dcts.append(
-                    {"Artist": elements[1].strip(), "Track": elements[2].strip()}
+                    {
+                        "artist": elements[1].strip(),
+                        "track": elements[2].strip(),
+                        "video_id": video_id,
+                    }
                 )
 
     return lst_of_dcts

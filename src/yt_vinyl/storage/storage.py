@@ -23,24 +23,54 @@ def create_bronze_table(conn):
         """create table if not exists raw_videos (
             video_id text primary key, 
             snippet text, 
-            ingestion_date text, 
-            processed integer default 0,
-            processed_date default null)"""
+            ingestion_date text,
+            processed_date default null
+            )"""
     )
-    conn.commit()
 
 
 def insert_raw_video(conn, video_id, snippet):
     conn.execute(
-        """insert into raw_videos (video_id, snippet, ingestion_date) 
+        """insert or ignore into raw_videos (video_id, snippet, ingestion_date) 
             values (:video_id, :snippet, date('now'))""",
         {"video_id": video_id, "snippet": json.dumps(snippet)},
     )
-    conn.commit()
 
 
 def get_raw_video_db(conn):
     list_of_tups = conn.execute(
-        "select * from raw_videos where processed = 0"
+        "select * from raw_videos where processed_date is null"
     ).fetchall()
     return [{"video_id": tup[0], "snippet": json.loads(tup[1])} for tup in list_of_tups]
+
+
+def create_silver_table(conn):
+    conn.execute(
+        """create table if not exists silver_videos (
+            track_id integer primary key,
+            video_id text, 
+            artist text,
+            track text,
+            status text default 'pending',
+            created_at text
+            )"""
+    )
+
+
+def insert_silver_track(conn, transformed_dct: dict):
+    conn.execute(
+        """insert into silver_videos (video_id, artist, track, created_at) 
+            values (:video_id, :artist, :track, date('now'))""",
+        {
+            "video_id": transformed_dct["video_id"],
+            "artist": transformed_dct["artist"],
+            "track": transformed_dct["track"],
+        },
+    )
+
+
+def update_bronze_when_processed(conn, video_id):
+    conn.execute(
+        """update raw_videos set processed_date = date('now') where video_id = :video_id""",
+        {"video_id": video_id},
+    )
