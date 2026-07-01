@@ -10,8 +10,7 @@ For DJ sets, compilations or any structured music that have individual tracks in
 ```
 git clone https://github.com/your-username/yt-vinyl-pipeline.git
 cd yt-vinyl-pipeline
-uv sync
-uv pip install -e .
+make installation
 ```
 
 ## Quick start
