@@ -1,3 +1,7 @@
+install:
+		uv sync
+		uv pip install -e .
+
 test:
 		uv run pytest -vvvrP
 
@@ -10,3 +14,6 @@ format:
 checks:
 		make lint
 		make test
+
+pipeline:
+		uv run src/yt_vinyl/pipeline.py
